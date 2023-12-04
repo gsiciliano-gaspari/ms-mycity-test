@@ -1,7 +1,22 @@
+// Font
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;300&display=swap");
+$font-family-sans-serif: "Roboto", sans-serif;
+// Colors BS5
+$black: #000000;
+$white: #ffffff;
+$white-opacity: rgba(255, 255, 255, 0.85);
+$gray: #999999;
+$gray-light: #eeeeee;
+$gray-dark: #333333;
+$red: #ff0000;
+$indigo: #4b0082;
+$primary: $indigo;
+$secondary: $red;
+$tertiary: yellow;
+$dark: $black;
+$light: $white;
+$body: $dark;
 // Body
-$body-bg: #f8fafc;
-
+$body-bg: $gray-light;
 // Typography
-$font-family-sans-serif: 'Nunito', sans-serif;
-$font-size-base: 0.9rem;
-$line-height-base: 1.6;
+$font-size-base: 1rem;

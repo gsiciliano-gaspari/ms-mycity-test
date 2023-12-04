@@ -1,0 +1,22 @@
+// Custom CSS
+#bodyBackground {
+    z-index: 0;
+    background-size: 15px 15px;
+    background-image: repeating-linear-gradient(
+        45deg,
+        $indigo 0,
+        $indigo 1.5px,
+        $body-bg 0,
+        $body-bg 50%
+    );
+}
+.body-container {
+    max-width: 960px;
+}
+.form-control {
+    border-width: 3px;
+    &:focus {
+        border-color: $dark;
+        box-shadow: none;
+    }
+}
