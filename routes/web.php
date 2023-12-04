@@ -14,8 +14,8 @@ Route::controller(App::class)->group(function () {
     Route::post('/store', 'store')->name('store');
     Route::get('/login', 'login')->name('login');
     Route::post('/authenticate', 'authenticate')->name('authenticate');
-    Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::post('/logout', 'logout')->name('logout');
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
 });
 Route::resources([
     'users' => UserController::class,
