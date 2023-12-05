@@ -10,11 +10,11 @@ use Illuminate\Support\Facades\Hash;
 // use Illuminate\Support\Facades\Log;
 class App extends Controller
 {
-    // Istanzia l'oggetto verificando se è guest tranne che nelle pagine logout e dashboard
+    // Istanzia l'oggetto verificando se è guest tranne che nelle pagine logout e home
     public function __construct()
     {
         $this->middleware('guest')->except([
-            'logout', 'dashboard', 'home'
+            'logout', 'home'
         ]);
     }
     public function loginSuccessMsg()
@@ -43,7 +43,7 @@ class App extends Controller
             'phone' => $request->phone,
             'password' => Hash::make($request->password)
         ]);
-        $credentials = $request->only('username', 'email', 'password');
+        $credentials = $request->only('username', 'password');
         Auth::attempt($credentials);
         $request->session()->regenerate();
         return redirect()->route('/home')
