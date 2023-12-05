@@ -14,6 +14,6 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/users', 'index');
         Route::get('/user/{id}', 'show');
         Route::post('/user/update/{id}', 'update');
-        Route::delete('/user/delete/{id}', 'delete');
+        Route::delete('/user/destroy/{id}', 'destroy');
     });
 });

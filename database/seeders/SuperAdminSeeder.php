@@ -30,15 +30,5 @@ class SuperAdminSeeder extends Seeder
             'password' => Hash::make(env('ADMIN_PASSWORD'))
         ]);
         $admin->assignRole('Admin');
-        // TODO TMP: Remove this
-        $admin2 = User::create([
-            'name' => 'Admin',
-            'surname' => 'Admin',
-            'username' => 'admin',
-            'email' => 'admin@mirkospino.com',
-            'phone' => '',
-            'password' => Hash::make('sviluppo2023')
-        ]);
-        $admin2->assignRole('Admin');
     }
 }

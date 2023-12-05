@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-// use Illuminate\Support\Facades\Log;
 class App extends Controller
 {
     // Istanzia l'oggetto verificando se è guest tranne che nelle pagine logout e home

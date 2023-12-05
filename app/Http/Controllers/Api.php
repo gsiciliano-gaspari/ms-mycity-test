@@ -7,13 +7,11 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Validator;
-// use Illuminate\Support\Facades\Log;
 
 class Api extends Controller
 {
     public function register(Request $request)
     {
-
         $validate = Validator::make($request->all(), [
             'name' => 'required|string|max:30',
             'surname' => 'required|string|max:30',
@@ -101,7 +99,6 @@ class Api extends Controller
             'message' => 'Lista degli utenti:',
             'data' => $users,
         ];
-        // Log::debug($file);
         return response()->json($response, 200);
     }
     // Visualizza singolo utente via API
