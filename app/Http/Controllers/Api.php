@@ -7,14 +7,22 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Validator;
+// use Illuminate\Support\Facades\Log;
 
 class Api extends Controller
 {
     public function register(Request $request)
     {
-        $userController = new UserController;
-        $userRegistrationFields = $userController->userRegistrationFields();
-        $validate = Validator::make($request->all(), $userRegistrationFields);
+
+        $validate = Validator::make($request->all(), [
+            'name' => 'required|string|max:30',
+            'surname' => 'required|string|max:30',
+            'username' => 'required|string|min:8|max:20|unique:users,username,' . $user->id,
+            'email' => 'required|email|max:50|unique:users,email,' . $user->id,
+            'phone' => 'nullable',
+            'password' => 'required|min:10|confirmed',
+            'roles' => 'required'
+        ]);
         if ($validate->fails()) {
             return response()->json([
                 'status' => 'failed',

@@ -21,6 +21,19 @@ class App extends Controller
     {
         return 'Hai effettuato il Login con successo';
     }
+    // Crea la View della Homepage
+    public function home()
+    {
+        $userFields = [
+            'name' => ['text', 'Nome'],
+            'surname' => ['text', 'Cognome'],
+            'username' => ['text', 'Username'],
+            'email' => ['email', 'Email'],
+            'phone' => ['phone', 'Telefono'],
+        ];
+        $title = 'Benvenuto';
+        return view('home', compact('title', 'userFields'));
+    }
     // Crea la View del Form di Registrazione
     public function register()
     {
@@ -32,9 +45,14 @@ class App extends Controller
     // Salva l'utente nel DB
     public function store(Request $request)
     {
-        $userController = new UserController;
-        $userRegistrationFields = $userController->userRegistrationFields();
-        $request->validate($userRegistrationFields);
+        $request->validate([
+            'name' => 'required|string|max:30',
+            'surname' => 'required|string|max:30',
+            'username' => 'required|string|min:8|max:20|unique:users',
+            'email' => 'required|email|max:50|unique:users',
+            'phone' => 'nullable',
+            'password' => 'required|min:10|confirmed'
+        ]);
         User::create([
             'name' => $request->name,
             'surname' => $request->surname,
@@ -46,7 +64,7 @@ class App extends Controller
         $credentials = $request->only('username', 'password');
         Auth::attempt($credentials);
         $request->session()->regenerate();
-        return redirect()->route('/home')
+        return redirect()->route('home')
             ->withSuccess($this->loginSuccessMsg());
     }
     // Crea la View del Form di Login

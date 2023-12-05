@@ -36,20 +36,6 @@ class UserController extends Controller
         ];
         return $userFields;
     }
-    // Elenco dei campi per la creazione o update dell'utente
-    public function userRegistrationFields()
-    {
-        $userRegistrationFields = [
-            'name' => 'required|string|max:30',
-            'surname' => 'required|string|max:30',
-            'username' => 'required|string|min:8|max:20|unique:users',
-            'email' => 'required|email|max:50|unique:users',
-            'phone' => 'nullable',
-            'password' => 'required|min:10|confirmed'
-        ];
-        return $userRegistrationFields;
-    }
-    // Crea la View con elenco utenti
     public function index(): View
     {
         $title = 'Elenco degli Utenti';
@@ -72,11 +58,6 @@ class UserController extends Controller
     // Crea la View per editare l'utente
     public function edit(User $user): View
     {
-        if ($user->hasRole('Super Admin')) {
-            if ($user->id != auth()->user()->id) {
-                abort(403, 'L\'Utente non ha le autorizzaizone per editare il proprio profilo');
-            }
-        }
         $userFields = $this->userFields();
         $title = 'Modifica Utente';
         return view(
@@ -128,12 +109,9 @@ class UserController extends Controller
     // Rimuovi l'utente
     public function destroy(User $user): RedirectResponse
     {
-        if ($user->hasRole('Super Admin') || $user->id == auth()->user()->id) {
-            abort(403, 'Non hai le autorizzazioni necessarie');
-        }
         $user->syncRoles([]);
         $user->delete();
         return redirect()->route('users.index')
-        ->withSuccess('L\'utente è stato eliminato');
+            ->withSuccess('L\'utente è stato eliminato');
     }
 }

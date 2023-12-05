@@ -17,7 +17,6 @@ class RoleSeeder extends Seeder
         $admin->givePermissionTo([
             'create-user',
             'edit-user',
-            'delete-user',
         ]);
         $stdUser->givePermissionTo([]);
     }

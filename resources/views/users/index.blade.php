@@ -50,20 +50,12 @@
                     @csrf
                     @method('DELETE')
                     <a href="{{ route('users.show', $user->id) }}" class=""><i class="bi bi-eye"></i></a>
-                    @if (in_array('Super Admin', $user->getRoleNames()->toArray() ?? []))
-                        @if (Auth::user()->hasRole('Super Admin'))
-                            <a href="{{ route('users.edit', $user->id) }}" class=""><i class="bi bi-pencil-square"></i></a>
-                        @endif
-                    @else
-                        @can('edit-user')
-                            <a href="{{ route('users.edit', $user->id) }}" class=""><i class="bi bi-pencil-square"></i></a>
-                        @endcan
-                        @can('delete-user')
-                            @if (Auth::user()->id != $user->id)
-                                <button type="submit" class="btn btn-link m-0 p-0" onclick="return confirm('Vuoi cancellare questo Utente?');"><i class="bi bi-trash"></i></button>
-                            @endif
-                        @endcan
-                    @endif
+                    @can('edit-user')
+                        <a href="{{ route('users.edit', $user->id) }}" class=""><i class="bi bi-pencil-square"></i></a>
+                    @endcan
+                    @can('delete-user')
+                        <button type="submit" class="btn btn-link m-0 p-0" onclick="return confirm('Vuoi cancellare questo Utente?');"><i class="bi bi-trash"></i></button>
+                    @endcan
                 </form>
             </div>
         </div>
