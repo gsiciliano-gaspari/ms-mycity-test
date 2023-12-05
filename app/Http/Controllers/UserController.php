@@ -42,7 +42,7 @@ class UserController extends Controller
         $userRegistrationFields = [
             'name' => 'required|string|max:30',
             'surname' => 'required|string|max:30',
-            'username' => 'required|string|max:20|unique:users',
+            'username' => 'required|string|min:8|max:20|unique:users',
             'email' => 'required|email|max:50|unique:users',
             'phone' => 'nullable',
             'password' => 'required|min:10|confirmed'

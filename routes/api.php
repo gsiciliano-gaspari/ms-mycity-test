@@ -7,9 +7,13 @@ use App\Http\Controllers\Api;
 Route::controller(Api::class)->group(function () {
     Route::post('/register', 'register');
     Route::post('/login', 'login');
-    Route::get('/users', 'index');
 });
-
 Route::middleware('auth:sanctum')->group(function () {
-    Route::post('/logout', [Api::class, 'logout']);
+    Route::controller(Api::class)->group(function () {
+        Route::post('/logout', 'logout');
+        Route::get('/users', 'index');
+        Route::get('/user/{id}', 'show');
+        Route::post('/user/update/{id}', 'update');
+        Route::delete('/user/delete/{id}', 'delete');
+    });
 });

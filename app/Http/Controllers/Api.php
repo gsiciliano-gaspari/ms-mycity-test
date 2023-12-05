@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Validator;
-use Illuminate\Support\Facades\Log;
 
 class Api extends Controller
 {
@@ -83,7 +82,6 @@ class Api extends Controller
     public function index()
     {
         $users = User::all();
-        Log::debug($users);
         if (is_null($users->first())) {
             return response()->json([
                 'status' => 'failed',
@@ -95,6 +93,58 @@ class Api extends Controller
             'message' => 'Lista degli utenti:',
             'data' => $users,
         ];
+        // Log::debug($file);
         return response()->json($response, 200);
+    }
+    // Visualizza singolo utente via API
+    public function show($id)
+    {
+        $product = User::find($id);
+        if (is_null($product)) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'Product is not found!',
+            ], 200);
+        }
+        $response = [
+            'status' => 'success',
+            'message' => 'Product is retrieved successfully.',
+            'data' => $product,
+        ];
+        return response()->json($response, 200);
+    }
+    // Aggiorna utente via API
+    public function update(Request $request, $id)
+    {
+        $user = User::find($id);
+        if (is_null($user)) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'L\'utente non è stato trovato',
+            ], 200);
+        }
+        $user->update($request->all());
+        $response = [
+            'status' => 'success',
+            'message' => 'L\'utente è stato aggiornato',
+            'data' => $user,
+        ];
+        return response()->json($response, 200);
+    }
+    // Elimina utente via API
+    public function delete($id)
+    {
+        $user = User::find($id);
+        if (is_null($user)) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'L\'utente non è stato trovato',
+            ], 200);
+        }
+        User::destroy($id);
+        return response()->json([
+            'status' => 'success',
+            'message' => 'L\'utente è stato eliminato',
+        ], 200);
     }
 }
