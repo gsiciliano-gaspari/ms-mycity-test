@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Validator;
+use Illuminate\Support\Facades\Log;
 
 class Api extends Controller
 {
@@ -15,11 +16,10 @@ class Api extends Controller
         $validate = Validator::make($request->all(), [
             'name' => 'required|string|max:30',
             'surname' => 'required|string|max:30',
-            'username' => 'required|string|min:8|max:20|unique:users,username,' . $user->id,
-            'email' => 'required|email|max:50|unique:users,email,' . $user->id,
+            'username' => 'required|string|min:8|max:20|unique:users',
+            'email' => 'required|email|max:50|unique:users',
             'phone' => 'nullable',
             'password' => 'required|min:10|confirmed',
-            'roles' => 'required'
         ]);
         if ($validate->fails()) {
             return response()->json([
@@ -108,12 +108,12 @@ class Api extends Controller
         if (is_null($product)) {
             return response()->json([
                 'status' => 'failed',
-                'message' => 'Product is not found!',
+                'message' => 'L\'utente non è stato trovato',
             ], 200);
         }
         $response = [
             'status' => 'success',
-            'message' => 'Product is retrieved successfully.',
+            'message' => 'L\'utente è stato trovato',
             'data' => $product,
         ];
         return response()->json($response, 200);
@@ -137,7 +137,7 @@ class Api extends Controller
         return response()->json($response, 200);
     }
     // Elimina utente via API
-    public function delete($id)
+    public function destroy($id)
     {
         $user = User::find($id);
         if (is_null($user)) {
